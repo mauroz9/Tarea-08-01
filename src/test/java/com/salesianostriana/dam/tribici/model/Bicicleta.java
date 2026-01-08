@@ -1,19 +1,17 @@
 package com.salesianostriana.dam.tribici.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Bicicleta {
 
     @Id
@@ -23,5 +21,13 @@ public class Bicicleta {
     private String marca;
     private String modelo;
     private Estado estado;
+
+    @ManyToOne
+    @JoinColumn(name = "estacion_id")
+    private Estacion estacion;
+
+    @OneToMany(mappedBy = "bicicleta")
+    @Builder.Default
+    private List<Uso> usos = new ArrayList<>();
 
 }

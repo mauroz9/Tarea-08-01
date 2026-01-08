@@ -1,11 +1,9 @@
 package com.salesianostriana.dam.tribici.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Estacion {
 
     @Id
@@ -24,8 +23,11 @@ public class Estacion {
     private String coordenada;
     private Long capacidad;
 
-    @OneToMany
-    private List<Bicicleta> bicicletas;
+    @OneToMany(mappedBy = "estacion", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Bicicleta> bicicletas = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "estacion", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Uso> usos = new ArrayList<>();
 }
