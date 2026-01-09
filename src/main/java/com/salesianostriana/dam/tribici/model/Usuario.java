@@ -45,4 +45,14 @@ public class Usuario {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    public void addUso(Uso uso){
+        usos.add(uso);
+        uso.setUsuario(this);
+    }
+
+    public void removeUso(Uso uso){
+        usos.remove(uso);
+        uso.setUsuario(null);
+    }
 }

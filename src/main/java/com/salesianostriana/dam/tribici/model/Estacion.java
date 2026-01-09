@@ -30,9 +30,10 @@ public class Estacion {
     @Builder.Default
     private List<Bicicleta> bicicletas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "estacion", fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Uso> usos = new ArrayList<>();
+    //No es buena práctica
+    //@OneToMany(mappedBy = "estacion", fetch = FetchType.LAZY)
+    //@Builder.Default
+    //private List<Uso> usos = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {
@@ -48,5 +49,17 @@ public class Estacion {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    //Metodos helper
+
+    public void addBicicleta(Bicicleta bicicleta){
+        bicicletas.add(bicicleta);
+        bicicleta.setEstacion(this);
+    }
+
+    public void removeBicicleta(Bicicleta bicicleta){
+        bicicletas.remove(bicicleta);
+        bicicleta.setEstacion(null);
     }
 }

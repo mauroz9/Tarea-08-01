@@ -26,7 +26,7 @@ public class Bicicleta {
     private Estado estado;
 
     @ManyToOne
-    @JoinColumn(name = "estacion_id")
+    @JoinColumn(name = "estacion_id", foreignKey = @ForeignKey(name = "fk_bicicleta_estacion"))
     private Estacion estacion;
 
     @OneToMany(mappedBy = "bicicleta")
@@ -48,5 +48,15 @@ public class Bicicleta {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public void addUso(Uso uso){
+        usos.add(uso);
+        uso.setBicicleta(this);
+    }
+
+    public void removeUso(Uso uso){
+        usos.remove(uso);
+        uso.setBicicleta(null);
     }
 }
